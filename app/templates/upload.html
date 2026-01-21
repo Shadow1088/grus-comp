@@ -1,12 +1,34 @@
 {% extends "base.html" %}
 {% from "macros.html" import render_field %}
-{% block title %}Upload{% endblock %}
+
+{% block title %}Compress Files{% endblock %}
+
 {% block content %}
-  <h1>Upload file</h1>
+  <h1>📦 File Compressor</h1>
+  <p>Upload an image or video to compress it instantly</p>
+  
   <form method="post" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    {{ render_field(form.file) }}
-    {{ form.submit() }}
+    
+    <div class="field">
+      <label for="file">Choose a file</label>
+      {{ form.file(class="file-input") }}
+      {% if form.file.errors %}
+        <div class="errors">
+          {% for error in form.file.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    
+    {{ form.submit(class="submit-btn") }}
   </form>
-  <p>Allowed: jpg, jpeg, png, gif. Max size from server: {{ config.MAX_CONTENT_LENGTH // (1024*1024) }} MB</p>
+  
+  <div class="info-box">
+    <strong>📋 Supported formats:</strong><br>
+    Images: JPG, JPEG, PNG, GIF<br>
+    Videos: MP4, MOV, AVI, and more<br>
+    <strong>Max size:</strong> {{ config.MAX_CONTENT_LENGTH // (1024*1024) }} MB
+  </div>
 {% endblock %}

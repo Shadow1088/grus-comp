@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  file-compressor:
+    build: .
+    container_name: file-compressor
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=run.py
+    volumes:
+      - ./app:/app/app
+    restart: unless-stopped
